@@ -5,6 +5,22 @@ var requestPort = 3000;  // 请求页面跑在3000端口
 
 app.use(express.static(__dirname + '/static')); //3000端口的静态文件，即index.html
 
+// 设置cookie 
+app.get('/set-cookie', (req, res) => {
+    
+    // 设置带有选项的 cookie
+    res.cookie('preferences', JSON.stringify({ theme: 'dark', language: 'en' }));
+  
+    res.send('Cookies set successfully.');
+  });
+
+  // 检查客户端请求中是否携带cookie
+  app.get('/local', (req, res) => {
+    res.send('local');
+  });
+
+  
+
 // __dirname始终指向当前js代码文件(serverReq.js)所在的目录, 在我的本地目录是D:\cross-domain\1-CORS
 // console.log(__dirname) 在dos窗口可以看到
 // 上面“express.static(__dirname + '/static')”的意思项目的静态文件目录在 D:\cross-domain\1-CORS\static

@@ -8,13 +8,32 @@
 <button>通过CROS跨域</button>
 <p>hello world 😘</p>
 <script>
+    (function() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', 'http://localhost:3000/set-cookie')
+        xhr.send()
+        xhr.onreadystatechange= () => {
+            console.log()
+            
+        }
+        
+    })();
+    (function () {
+        setTimeout(() => {
+            const xhr = new XMLHttpRequest()
+            xhr.open('get', 'http://localhost:3000/local')
+            xhr.send()
+        }, 2000)
+    })()
     var btn = document.getElementsByTagName('button')[0];
     var text = document.getElementsByTagName('p')[0];
     btn.addEventListener('click', function () {
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:3001';    // 请求的3001端口获取数据
-        xhr.open('GET', url);                 // 与3001端口建立一个连接
-        xhr.send(null);                       // 发送给3001端口数据为空
+        var url = 'http://localhost:3001/api';    // 请求的3001端口获取数据
+        xhr.open('POST', url);    
+        xhr.withCredentials = true             // 与3001端口建立一个连接
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify({name: 'cs', age: 18}));                       // 发送给3001端口数据为空
         xhr.onreadystatechange = () => {     // 请求状态改变后调用这个函数
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {  // 如果请求成功
                 text.innerHTML = xhr.response;
